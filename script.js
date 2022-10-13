@@ -6,6 +6,7 @@ img.src = "./media/flappy-bird-set.png";
 // general settings
 let gamePlaying = false;
 let scoreMode = false;
+let levelMode = false;
 const gravity = 0.5;
 const speed = 6.2;
 const size = [51, 36];
@@ -15,6 +16,8 @@ const cTenth = canvas.width / 10;
 let index = 0,
   flight,
   flyHeight,
+  bestScore,
+  bestLevelScore,
   currentScore,
   lastScore = 0,
   sessionScore = 0,
@@ -24,6 +27,12 @@ if (localStorage.score) {
   bestScore = localStorage.score;
 } else {
   bestScore = 0;
+}
+
+if (localStorage.levelScore) {
+  bestLevelScore = localStorage.levelScore;
+} else {
+  bestLevelScore = 0;
 }
 
 // pipe settings
@@ -111,8 +120,13 @@ const render = () => {
         currentScore++;
         // check if it's the best score
         sessionScore = Math.max(sessionScore, currentScore);
-        bestScore = Math.max(bestScore, currentScore);
-        localStorage.score = bestScore;
+        if (scoreMode) {
+          bestScore = Math.max(bestScore, currentScore);
+          localStorage.score = bestScore;
+        } else if (levelMode) {
+          bestLevelScore = Math.max(bestLevelScore, currentScore);
+          localStorage.levelScore = bestLevelScore;
+        }
 
         // remove and create new pipe
         pipes = [
@@ -165,19 +179,37 @@ const render = () => {
     ctx.fillText(`Dernier Score : ${lastScore}`, 74, 300);
     ctx.fillText(`Cliquez pour jouer`, 48, 535);
     ctx.font = "bold 30px courier";
+  } else if (levelMode) {
+    ctx.drawImage(
+      img,
+      432,
+      Math.floor((index % 9) / 3) * size[1],
+      ...size,
+      canvas.width / 2 - size[0] / 2,
+      flyHeight,
+      ...size
+    );
+    flyHeight = canvas.height / 2 - size[1] / 2;
+    ctx.fillText(`Meilleur Score : ${bestLevelScore}`, 55, 120);
+    ctx.fillText(`Score Session : ${sessionScore}`, 74, 210);
+    ctx.fillText(`Dernier Score : ${lastScore}`, 74, 300);
+    ctx.fillText(`Cliquez pour jouer`, 48, 535);
+    ctx.font = "bold 30px courier";
   }
-  // else {
-  //   document.querySelector(".on-canvas").innerHTML = `
-  //     <button id="btn1" class='btn scoring'>Scoring</button>
-  //     <button id="btn2" class='btn leveling'>Leveling</button>
-  //   `;
-  //   ctx.font = "bold 30px courier";
-  // }
 
-  document.getElementById("bestScore").innerHTML = `Meilleur : ${bestScore}`;
-  document.getElementById(
-    "currentScore"
-  ).innerHTML = `Actuel : ${currentScore}`;
+  if (scoreMode) {
+    document.getElementById("bestScore").innerHTML = `Meilleur : ${bestScore}`;
+    document.getElementById(
+      "currentScore"
+    ).innerHTML = `Actuel : ${currentScore}`;
+  } else if (levelMode) {
+    document.getElementById(
+      "bestScore"
+    ).innerHTML = `Meilleur : ${bestLevelScore}`;
+    document.getElementById(
+      "currentScore"
+    ).innerHTML = `Actuel : ${currentScore}`;
+  }
 
   // tell the browser to perform anim
   window.requestAnimationFrame(render);
@@ -189,10 +221,13 @@ img.onload = render;
 
 // start game
 document.addEventListener("click", (e) => {
-  if (scoreMode) {
+  if (scoreMode || levelMode) {
     gamePlaying = true;
   } else if (e.target.id == "btn1") {
     scoreMode = true;
+    document.querySelector(".on-canvas").innerHTML = ``;
+  } else if (e.target.id == "btn2") {
+    levelMode = true;
     document.querySelector(".on-canvas").innerHTML = ``;
   }
 });
