@@ -97,6 +97,19 @@ const render = () => {
         pipeWidth,
         canvas.height - pipe[1] + pipeGap
       );
+
+      // take one point + create new pipe
+      if (pipe[0] <= -pipeWidth) {
+        currentScore++;
+        // check if it's the best score
+        bestScore = Math.max(bestScore, currentScore);
+
+        // remove and create new pipe
+        pipes = [
+          ...pipes.slice(1),
+          [pipes[pipes.length - 1][0] + pipeGap + pipeWidth, pipeLoc()],
+        ];
+      }
     });
   }
 
