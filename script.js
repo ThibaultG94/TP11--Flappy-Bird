@@ -15,6 +15,8 @@ let index = 0,
   flight,
   flyHeight,
   currentScore,
+  lastScore = 0,
+  sessionScore = 0,
   pipe;
 
 if (localStorage.score) {
@@ -107,6 +109,7 @@ const render = () => {
       if (pipe[0] <= -pipeWidth) {
         currentScore++;
         // check if it's the best score
+        sessionScore = Math.max(sessionScore, currentScore);
         bestScore = Math.max(bestScore, currentScore);
         localStorage.score = bestScore;
 
@@ -126,6 +129,7 @@ const render = () => {
         ].every((elem) => elem)
       ) {
         gamePlaying = false;
+        lastScore = currentScore;
         setup();
       }
     });
@@ -155,7 +159,9 @@ const render = () => {
       ...size
     );
     flyHeight = canvas.height / 2 - size[1] / 2;
-    ctx.fillText(`Meilleur Score : ${bestScore}`, 55, 245);
+    ctx.fillText(`Meilleur Score : ${bestScore}`, 55, 120);
+    ctx.fillText(`Score Session : ${sessionScore}`, 74, 210);
+    ctx.fillText(`Dernier Score : ${lastScore}`, 74, 300);
     ctx.fillText(`Clquez pour jouer`, 48, 535);
     ctx.font = "bold 30px courier";
   }
