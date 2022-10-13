@@ -43,7 +43,7 @@ const render = () => {
     0,
     canvas.width,
     canvas.height,
-    0,
+    -((index * (speed / 2)) % canvas.width) + canvas.width,
     0,
     canvas.width,
     canvas.height
@@ -55,7 +55,7 @@ const render = () => {
     0,
     canvas.width,
     canvas.height,
-    0,
+    -((index * (speed / 2)) % canvas.width),
     0,
     canvas.width,
     canvas.height
