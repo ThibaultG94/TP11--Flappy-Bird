@@ -77,6 +77,9 @@ const render = () => {
       ...size
     );
     flyHeight = canvas.height / 2 - size[1] / 2;
+    ctx.fillText(`Meilleur Score : ${bestScore}`, 55, 245);
+    ctx.fillText(`Clquez pour jouer`, 48, 535);
+    ctx.font = "bold 30px courier";
   }
 
   document.getElementById("bestScore").innerHTML = `Meilleur : ${bestScore}`;
