@@ -5,6 +5,7 @@ img.src = "./media/flappy-bird-set.png";
 
 // general settings
 let gamePlaying = false;
+let scoreMode = false;
 const gravity = 0.5;
 const speed = 6.2;
 const size = [51, 36];
@@ -148,7 +149,7 @@ const render = () => {
     );
     flight += gravity;
     flyHeight = Math.min(flyHeight + flight, canvas.height - size[1]);
-  } else {
+  } else if (scoreMode) {
     ctx.drawImage(
       img,
       432,
@@ -165,6 +166,13 @@ const render = () => {
     ctx.fillText(`Cliquez pour jouer`, 48, 535);
     ctx.font = "bold 30px courier";
   }
+  // else {
+  //   document.querySelector(".on-canvas").innerHTML = `
+  //     <button id="btn1" class='btn scoring'>Scoring</button>
+  //     <button id="btn2" class='btn leveling'>Leveling</button>
+  //   `;
+  //   ctx.font = "bold 30px courier";
+  // }
 
   document.getElementById("bestScore").innerHTML = `Meilleur : ${bestScore}`;
   document.getElementById(
@@ -180,5 +188,12 @@ setup();
 img.onload = render;
 
 // start game
-document.addEventListener("click", () => (gamePlaying = true));
+document.addEventListener("click", (e) => {
+  if (scoreMode) {
+    gamePlaying = true;
+  } else if (e.target.id == "btn1") {
+    scoreMode = true;
+    document.querySelector(".on-canvas").innerHTML = ``;
+  }
+});
 window.onclick = () => (flight = jump);
