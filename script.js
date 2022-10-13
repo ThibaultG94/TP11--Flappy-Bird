@@ -23,9 +23,34 @@ const pipeWidth = 78;
 const pipeGap = 270;
 const pipeLoc = () => {};
 
-const setup = () => {};
+const setup = () => {
+  currentScore = 0;
+  flight = jump;
 
-const render = () => {};
+  // set initial flyHeight (middle of screen - size of the bird)
+
+  // setup first 3 pipes
+};
+
+const render = () => {
+  //make the pipe and bird moving
+  index++;
+
+  // background first part
+  // background second part
+
+  // pipe display
+
+  // draw bird
+
+  document.getElementById("bestScore").innerHTML = `Meilleur : ${bestScore}`;
+  document.getElementById(
+    "currentScore"
+  ).innerHTML = `Actuel : ${currentScore}`;
+
+  // tell the browser to perform anim
+  window.requestAnimationFrame(render);
+};
 
 // Launch setup
 setup();
