@@ -162,7 +162,7 @@ const render = () => {
     ctx.fillText(`Meilleur Score : ${bestScore}`, 55, 120);
     ctx.fillText(`Score Session : ${sessionScore}`, 74, 210);
     ctx.fillText(`Dernier Score : ${lastScore}`, 74, 300);
-    ctx.fillText(`Clquez pour jouer`, 48, 535);
+    ctx.fillText(`Cliquez pour jouer`, 48, 535);
     ctx.font = "bold 30px courier";
   }
 
