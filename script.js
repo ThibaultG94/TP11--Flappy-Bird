@@ -68,6 +68,37 @@ const render = () => {
   );
 
   // pipe display
+  if (gamePlaying) {
+    pipes.map((pipe) => {
+      // pipe moving
+      pipe[0] -= speed;
+
+      // top pipe
+      ctx.drawImage(
+        img,
+        432,
+        588 - pipe[1],
+        pipeWidth,
+        pipe[1],
+        pipe[0],
+        0,
+        pipeWidth,
+        pipe[1]
+      );
+      // bottom pipe
+      ctx.drawImage(
+        img,
+        432 + pipeWidth,
+        108,
+        pipeWidth,
+        canvas.height - pipe[1] + pipeGap,
+        pipe[0],
+        pipe[1] + pipeGap,
+        pipeWidth,
+        canvas.height - pipe[1] + pipeGap
+      );
+    });
+  }
 
   // draw bird
   if (gamePlaying) {
