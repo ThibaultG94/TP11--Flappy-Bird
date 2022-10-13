@@ -37,7 +37,29 @@ const render = () => {
   index++;
 
   // background first part
+  ctx.drawImage(
+    img,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
   // background second part
+  ctx.drawImage(
+    img,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
 
   // pipe display
 
