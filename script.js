@@ -21,15 +21,21 @@ let index = 0,
 // pipe settings
 const pipeWidth = 78;
 const pipeGap = 270;
-const pipeLoc = () => {};
+const pipeLoc = () =>
+  Math.random() * (canvas.height - (pipeGap + pipeWidth) - pipeWidth) +
+  pipeWidth;
 
 const setup = () => {
   currentScore = 0;
   flight = jump;
 
   // set initial flyHeight (middle of screen - size of the bird)
+  flyHeight = canvas.height / 2 - size[1] / 2;
 
   // setup first 3 pipes
+  pipes = Array(3)
+    .fill()
+    .map((a, i) => [canvas.width + i * (pipeGap + pipeWidth), pipeLoc()]);
 };
 
 const render = () => {
@@ -65,7 +71,17 @@ const render = () => {
 
   // draw bird
   if (gamePlaying) {
-    console.log("Jeu à faire...");
+    ctx.drawImage(
+      img,
+      432,
+      Math.floor((index % 9) / 3) * size[1],
+      ...size,
+      cTenth,
+      flyHeight,
+      ...size
+    );
+    flight += gravity;
+    flyHeight = Math.min(flyHeight + flight, canvas.height - size[1]);
   } else {
     ctx.drawImage(
       img,
