@@ -12,11 +12,16 @@ const jump = -11.5;
 const cTenth = canvas.width / 10;
 
 let index = 0,
-  bestScore = 0,
   flight,
   flyHeight,
   currentScore,
   pipe;
+
+if (localStorage.score) {
+  bestScore = localStorage.score;
+} else {
+  bestScore = 0;
+}
 
 // pipe settings
 const pipeWidth = 78;
@@ -103,6 +108,7 @@ const render = () => {
         currentScore++;
         // check if it's the best score
         bestScore = Math.max(bestScore, currentScore);
+        localStorage.score = bestScore;
 
         // remove and create new pipe
         pipes = [
